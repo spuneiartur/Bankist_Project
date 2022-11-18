@@ -1,0 +1,412 @@
+/*Обнуление*/
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+*,
+*:before,
+*:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+:focus,
+:active {
+  outline: none;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+nav,
+footer,
+header,
+aside {
+  display: block;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 100%;
+  line-height: 1;
+  font-size: 14px;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  background-color: #f3f3f3;
+  color: #444444;
+}
+
+input,
+button,
+textarea {
+  font-family: inherit;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+ul li {
+  list-style: none;
+
+}
+
+img {
+  vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: 400;
+}
+
+/* ======================TECH CONTAINERS============================ */
+
+
+._container {
+  max-width: 1064px;
+  padding: 0 15px;
+  margin: 0 auto;
+  box-sizing: content-box;
+  margin: auto;
+}
+
+._ibg {
+  position: relative;
+}
+
+._ibg img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+
+.wrapper {
+  padding: 0 15px;
+  box-sizing: content-box;
+}
+
+.class__display {
+  opacity: 0;
+}
+
+/* ======================Bankist CSS============================ */
+
+/* =======================HEADER=============================== */
+.nav {
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 25px 40px 40px 40px;
+}
+
+.nav__title {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.nav__logo img {
+  width: 52.5px;
+  height: 52.5px;
+}
+
+.nav__logo--link {}
+
+.log__container {}
+
+.log__container input {
+  margin: 0 5px;
+  padding: 10px;
+  border-radius: 20px;
+  max-width: 120px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.log__container button {
+  width: 22px;
+  height: 36px;
+  font-size: 24px;
+}
+
+
+
+/* =======================BODY=============================== */
+
+.wrapper {
+  max-width: 1064px;
+  display: grid;
+  grid-template: 70px repeat(3, 140px) / 1.3fr 1fr;
+  grid-template-areas: 'balance balance' 'history payments' 'history loan' 'history close';
+  margin: 40px auto;
+  row-gap: 20px;
+  column-gap: 20px;
+  max-height: 900px;
+  transition: all 2s;
+}
+
+
+.balance__container {
+  grid-area: balance;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+
+}
+
+.balance__title {}
+
+.balance__text {
+  font-size: 22px;
+  line-height: 30px;
+  letter-spacing: 0.2px;
+}
+
+.balance__date {
+  font-size: 14px;
+  color: #888888;
+}
+
+.balance__value {
+  font-size: 45px;
+}
+
+.history__container {
+  grid-area: history;
+  overflow: scroll;
+}
+
+.payments__container {
+  display: flex;
+  background-color: #ffffff;
+  border: 0.1px solid #f6f5f5;
+  padding: 22.5px 40px;
+
+
+}
+
+.payment__type {
+  justify-self: start;
+  font-size: 11px;
+  color: #ffffff;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.payment__type--deposit {
+  background-image: linear-gradient(to top left, #39b385, #9be15d);
+
+}
+
+.payment__type--withdrawal {
+  background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+
+}
+
+.payment__date {
+  margin: 0 0 0 15px;
+  font-size: 11px;
+  color: #888888;
+}
+
+.payment__value {
+  margin: 0 0 0 auto;
+  justify-self: end;
+  font-size: 17px;
+}
+
+.section__operations {
+  border-radius: 20px;
+}
+
+
+
+.transfer__section {
+  grid-area: payments;
+  background-image: linear-gradient(to top left, #ffb003, #ffcb03);
+
+
+
+}
+
+.form__operations {
+  display: grid;
+  grid-template: 1fr 1fr 0.5fr / repeat(3, 1fr);
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  height: 100%;
+  padding: 40px;
+  row-gap: 10px;
+  column-gap: 7px;
+
+}
+
+.transfer__form {}
+
+.section__title {
+  grid-column: 1 / span 3;
+  align-self: center;
+  margin-top: -10px;
+  font-size: 16px;
+  color: #333333;
+  font-weight: 500;
+
+}
+
+.form__input {
+  opacity: 0.4;
+  padding: 5px 0;
+  border-radius: 7px;
+  text-align: center;
+}
+
+.section__operations label {
+  font-size: 13px;
+  color: #333333;
+}
+
+.input__transfer--to {}
+
+.input__transfer--amount {}
+
+.form__btn {
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 14px;
+  max-width: 34px;
+  max-height: 30px;
+}
+
+.btn--transfer {}
+
+.loan__section {
+  grid-area: loan;
+  background-image: linear-gradient(to top left, #39b385, #9be15d);
+}
+
+.loan__form label {
+  grid-row: 3;
+}
+
+.input__loan--amount {}
+
+.btn--loan {}
+
+.close__section {
+  grid-area: close;
+  background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+}
+
+.close__form {}
+
+.input__close--user {}
+
+.input__close--PIN {}
+
+.btn--close {}
+
+/* =================================FOOTER============================ */
+footer {
+  margin: 80px auto;
+  display: flex;
+  align-items: center;
+  max-width: 1064px;
+}
+
+.container__footer--wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex: 1 1 60%;
+}
+
+.container__footer {
+  display: flex;
+  align-items: center;
+}
+
+.container__in {}
+
+.container__in--text {
+  font-size: 12px;
+}
+
+.container__in--value {
+  margin: 0 0 0 10px;
+  font-size: 22px;
+  color: #66c873;
+}
+
+.container__out {}
+
+.container__out--text {
+  font-size: 12px;
+}
+
+.container__out--value {
+  margin: 0 0 0 10px;
+  font-size: 22px;
+  color: #f5465d;
+}
+
+.container__interest {}
+
+.container__interest--text {
+  font-size: 12px;
+
+}
+
+.container__interest--value {
+  margin: 0 0 0 10px;
+  font-size: 22px;
+  color: #66c873;
+}
+
+.sort__btn {}
+
+.log__timer {
+  margin: 0 0 0 auto;
+  flex: 1 1 40%;
+  text-align: center;
+}

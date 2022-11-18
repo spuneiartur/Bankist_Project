@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Bankist</title>
+    <script defer src="./script.js"></script>
+  </head>
+  <body>
+    <header>
+      <nav class="nav">
+        <div class="nav__title">Log in to get started</div>
+        <div class="nav__logo">
+          <a href="#top" class="nav__logo--link">
+            <img src="./Assets/logo.png" alt="Bankist_logo" />
+          </a>
+        </div>
+        <div class="log__container">
+          <input type="text" placeholder="user" class="input--log" />
+          <input type="password" placeholder="PIN" class="input--password" />
+          <button class="log__btn">&rarr;</button>
+        </div>
+      </nav>
+    </header>
+    <div class="wrapper class__display">
+      <section class="balance__container">
+        <div class="balance__title">
+          <div class="balance__text">Current balance</div>
+          <div class="balance__date">As of 13/11/2022, 18:17</div>
+        </div>
+        <div class="balance__value">15000€</div>
+      </section>
+      <section class="history__container">
+        <div class="payments__container">
+          <div class="payment__type">1 deposit</div>
+          <div class="payment__date">12/03/2020</div>
+          <div class="payment__value">1300.00€</div>
+        </div>
+        <div class="payments__container">
+          <div class="payment__type">1 deposit</div>
+          <div class="payment__date">12/03/2020</div>
+          <div class="payment__value">1300.00€</div>
+        </div>
+        <div class="payments__container">
+          <div class="payment__type">1 deposit</div>
+          <div class="payment__date">12/03/2020</div>
+          <div class="payment__value">1300.00€</div>
+        </div>
+        <div class="payments__container">
+          <div class="payment__type">1 deposit</div>
+          <div class="payment__date">12/03/2020</div>
+          <div class="payment__value">1300.00€</div>
+        </div>
+        <div class="payments__container">
+          <div class="payment__type">1 deposit</div>
+          <div class="payment__date">12/03/2020</div>
+          <div class="payment__value">1300.00€</div>
+        </div>
+      </section>
+      <section class="transfer__section section__operations">
+        <form action="" class="form__operations transfer__form">
+          <div class="section__title">Transfer money</div>
+          <input type="text" class="form__input input__transfer--to" />
+          <input type="number" class="form__input input__transfer--amount" />
+          <button class="form__btn btn--transfer">&rarr;</button>
+          <label for="">Transfer to</label>
+          <label for="">Amount</label>
+        </form>
+      </section>
+      <section class="loan__section section__operations">
+        <form action="" class="form__operations loan__form">
+          <div class="section__title">Request loan</div>
+          <input type="number" class="form__input input__loan--amount" />
+          <button class="form__btn btn--loan">&rarr;</button>
+          <label for="">Amount</label>
+        </form>
+      </section>
+      <section class="close__section section__operations">
+        <form action="" class="form__operations close__form">
+          <div class="section__title">Close account</div>
+          <input type="text" class="form__input input__close--user" />
+          <input
+            type="password"
+            class="form__input input__close--PIN"
+            maxlength="4"
+          />
+          <button class="form__btn btn--close">&rarr;</button>
+          <label for="">Confirm user</label>
+          <label for="">Confirm PIN</label>
+        </form>
+      </section>
+    </div>
+    <footer>
+      <div class="container__footer--wrapper">
+        <div class="container__footer container__in">
+          <div class="container__in--text">IN</div>
+          <div class="container__in--value">27035.20</div>
+        </div>
+        <div class="container__footer container__out">
+          <div class="container__out--text">OUT</div>
+          <div class="container__out--value">2705.20</div>
+        </div>
+        <div class="container__footer container__interest">
+          <div class="container__interest--text">INTEREST</div>
+          <div class="container__interest--value">703.20</div>
+        </div>
+        <button class="sort__btn">&darr; Sort</button>
+      </div>
+      <div class="log__timer">You will be logged out in 10:00</div>
+    </footer>
+  </body>
+</html>
