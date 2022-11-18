@@ -19,10 +19,12 @@ const footerEl = document.querySelector("footer");
 const inValueEl = document.querySelector(".container__in--value");
 const outValueEl = document.querySelector(".container__out--value");
 const interestValueEl = document.querySelector(".container__interest--value");
+const sortBtn = document.querySelector(".sort__btn");
 // Variables
 let loginStatus = false;
 let currentAccount;
 let balance;
+let sortedStatus = false;
 // Data
 
 const user1 = {
@@ -123,10 +125,15 @@ const computeSummary = function (acc) {
 };
 
 // Function Update UI
-const updateUI = function () {
+const updateUI = function (sortedStatus = false) {
   balance = 0;
   historyEl.innerHTML = "";
-  currentAccount.movements.forEach((mov, i) => {
+  // Deciding on sorting the array
+  const sortedArray = sortedStatus
+    ? currentAccount.movements.slice(0).sort((a, b) => a - b)
+    : currentAccount.movements;
+
+  sortedArray.forEach((mov, i) => {
     // Formating every movement
     const formatedMov = new Intl.NumberFormat(
       currentAccount.locales,
@@ -212,7 +219,7 @@ const closeAccFunction = function () {
 };
 
 // Events Handlers   ===================================================
-
+// Login event handler
 logBtn.addEventListener("click", function (e) {
   users.forEach((user) => {
     if (
@@ -239,7 +246,7 @@ inputLogin.addEventListener("focus", function (e) {
   window.addEventListener("keypress", pressingLogBtn);
 });
 
-// Transfer mechanics
+// Transfer event handler
 transferBtn.addEventListener("click", function (e) {
   e.preventDefault();
   if (
@@ -251,7 +258,7 @@ transferBtn.addEventListener("click", function (e) {
     updateUI();
   }
 });
-// Loan mechanics
+// Loan event handler
 loanBtn.addEventListener("click", function (e) {
   e.preventDefault();
   const loanValue = Number(inputLoanAmount.value);
@@ -259,8 +266,16 @@ loanBtn.addEventListener("click", function (e) {
   updateUI();
 });
 
-//Close account mechanics
+//Close account event handler
 closeBtn.addEventListener("click", function (e) {
   e.preventDefault();
   closeAccFunction();
+});
+
+// Sorting event handler
+sortBtn.addEventListener("click", function (e) {
+  sortedStatus = !sortedStatus;
+  if (sortedStatus) sortBtn.textContent = "\u2191 Sort";
+  else sortBtn.innerText = `\u2193 Sort`;
+  updateUI(sortedStatus);
 });
