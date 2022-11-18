@@ -15,6 +15,7 @@ const loanBtn = document.querySelector(".btn--loan");
 const inputCloseUser = document.querySelector(".input__close--user");
 const inputClosePIN = document.querySelector(".input__close--PIN");
 const closeBtn = document.querySelector(".btn--close");
+const footerEl = document.querySelector("footer");
 // Variables
 let loginStatus = false;
 let currentAccount;
@@ -75,15 +76,24 @@ const optionsForNumberFormating = {
 // Functions        ===================================================
 
 // Implementing log in function
-const loginFunction = function (user) {
-  currentAccount = user;
-  loginStatus = true;
-  inputLogin.value = "";
-  inputPIN.value = "";
-  wrapper.classList.remove("class__display");
-  navTitle.textContent = `Welcome, ${currentAccount.fName}!`;
-  // Update UI
-  updateUI();
+const loginFunction = function (user = null) {
+  if (loginStatus === false) {
+    currentAccount = user;
+    loginStatus = true;
+    inputLogin.value = "";
+    inputPIN.value = "";
+    wrapper.classList.remove("class__display");
+    footerEl.classList.remove("class__display");
+    navTitle.textContent = `Welcome, ${currentAccount.fName}!`;
+    // Update UI
+    updateUI();
+  } else {
+    currentAccount = null;
+    loginStatus = false;
+    wrapper.classList.add("class__display");
+    footerEl.classList.add("class__display");
+    navTitle.textContent = `Log in to get started`;
+  }
 };
 
 // Function Update UI
@@ -128,7 +138,7 @@ const addMovement = function (user, value) {
 
 const transferMoney = function (currentAccount) {
   let receiverAcc;
-  const trasnferValue = Number(inputTransferAmount.value);
+  const transferValue = Number(inputTransferAmount.value);
   users.forEach(function (user) {
     if (user.login === inputTransferTo.value && currentAccount !== user)
       receiverAcc = user;
@@ -137,9 +147,9 @@ const transferMoney = function (currentAccount) {
 
   if (receiverAcc) {
     // Change in movements in current acc
-    addMovement(currentAccount, -trasnferValue);
+    addMovement(currentAccount, -transferValue);
     // Change in movements in receiver acc
-    addMovement(receiverAcc, trasnferValue);
+    addMovement(receiverAcc, transferValue);
 
     inputTransferAmount.value = "";
     inputTransferTo.value = "";
@@ -148,15 +158,31 @@ const transferMoney = function (currentAccount) {
 
 // Function Loan Mechanics
 const loanFunction = function (loanValue) {
+  if (loanValue <= 0) return;
   const maxMovement = currentAccount.movements.reduce((acc, mov) =>
     acc > mov || acc === undefined ? acc : mov
   );
   if (loanValue <= (maxMovement * 25) / 100) {
     addMovement(currentAccount, loanValue);
+    inputLoanAmount.value = "";
+  }
+};
+// Function close acc mechanics
+const closeAccFunction = function () {
+  if (
+    currentAccount.login === inputCloseUser.value &&
+    currentAccount.password === Number(inputClosePIN.value)
+  ) {
+    users.splice(users.indexOf(currentAccount), 1);
+    for (key in currentAccount) {
+      delete currentAccount[key];
+    }
+    console.log(users);
+    loginFunction();
   }
 };
 
-// Events           ===================================================
+// Events Handlers   ===================================================
 
 logBtn.addEventListener("click", function (e) {
   users.forEach((user) => {
@@ -196,15 +222,16 @@ transferBtn.addEventListener("click", function (e) {
     updateUI();
   }
 });
-
+// Loan mechanics
 loanBtn.addEventListener("click", function (e) {
   e.preventDefault();
   const loanValue = Number(inputLoanAmount.value);
-  if (loanValue > 0) {
-    loanFunction(loanValue);
-    inputLoanAmount.value = "";
-    updateUI();
-  }
+  loanFunction(loanValue);
+  updateUI();
 });
 
-//
+//Clsoe account mechanics
+closeBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  closeAccFunction();
+});
