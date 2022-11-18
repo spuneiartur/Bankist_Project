@@ -16,6 +16,9 @@ const inputCloseUser = document.querySelector(".input__close--user");
 const inputClosePIN = document.querySelector(".input__close--PIN");
 const closeBtn = document.querySelector(".btn--close");
 const footerEl = document.querySelector("footer");
+const inValueEl = document.querySelector(".container__in--value");
+const outValueEl = document.querySelector(".container__out--value");
+const interestValueEl = document.querySelector(".container__interest--value");
 // Variables
 let loginStatus = false;
 let currentAccount;
@@ -41,6 +44,7 @@ const user1 = {
     "11/16/2022",
   ],
   locales: "md-MD",
+  interestRate: 1.2, // %
 };
 
 const user2 = {
@@ -66,6 +70,7 @@ const user2 = {
     "11/16/2022",
   ],
   locales: "en-US",
+  interestRate: 1.5, // %
 };
 const users = [user1, user2];
 
@@ -94,6 +99,27 @@ const loginFunction = function (user = null) {
     footerEl.classList.add("class__display");
     navTitle.textContent = `Log in to get started`;
   }
+};
+// Computing summary
+const computeSummary = function (acc) {
+  const valueIn = acc.movements
+    .filter((mov) => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  const valueOut = acc.movements
+    .filter((mov) => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  const valueInterest = Math.floor(
+    acc.movements
+      .filter((mov) => mov > 0)
+      .filter((mov) => mov * (acc.interestRate / 100) > 1)
+      .reduce(
+        (accumulator, mov) => accumulator + (mov * acc.interestRate) / 100,
+        0
+      )
+  );
+  inValueEl.textContent = valueIn;
+  outValueEl.textContent = valueOut;
+  interestValueEl.textContent = valueInterest;
 };
 
 // Function Update UI
@@ -124,6 +150,8 @@ const updateUI = function () {
     currentAccount.locales,
     optionsForNumberFormating
   ).format(balance);
+  computeSummary(currentAccount);
+  // computeInSummary();
 };
 loginFunction(user1); // always logged in ------------------------------
 
@@ -159,8 +187,9 @@ const transferMoney = function (currentAccount) {
 // Function Loan Mechanics
 const loanFunction = function (loanValue) {
   if (loanValue <= 0) return;
-  const maxMovement = currentAccount.movements.reduce((acc, mov) =>
-    acc > mov || acc === undefined ? acc : mov
+  const maxMovement = currentAccount.movements.reduce(
+    (acc, mov) => (acc > mov ? acc : mov),
+    0
   );
   if (loanValue <= (maxMovement * 25) / 100) {
     addMovement(currentAccount, loanValue);
@@ -230,7 +259,7 @@ loanBtn.addEventListener("click", function (e) {
   updateUI();
 });
 
-//Clsoe account mechanics
+//Close account mechanics
 closeBtn.addEventListener("click", function (e) {
   e.preventDefault();
   closeAccFunction();
