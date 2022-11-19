@@ -1,4 +1,5 @@
 // Selecting elements
+const headerEl = document.querySelector("header");
 const logContainerEl = document.querySelector(".log__container");
 const inputLogin = document.querySelector(".input--log");
 const inputPIN = document.querySelector(".input--password");
@@ -20,6 +21,9 @@ const inValueEl = document.querySelector(".container__in--value");
 const outValueEl = document.querySelector(".container__out--value");
 const interestValueEl = document.querySelector(".container__interest--value");
 const sortBtn = document.querySelector(".sort__btn");
+const popUpWrongInputEl = document.querySelector(".popUp__wrongInput");
+const popUpWrongInputText = document.querySelector(".popUp__text");
+const timerEl = document.querySelector(".log__timer");
 // Variables
 let loginStatus = false;
 let currentAccount;
@@ -85,20 +89,21 @@ const optionsForNumberFormating = {
 // Implementing log in function
 const loginFunction = function (user = null) {
   if (loginStatus === false) {
+    let seconds = 60 * 10;
     currentAccount = user;
     loginStatus = true;
     inputLogin.value = "";
     inputPIN.value = "";
-    wrapper.classList.remove("class__display");
-    footerEl.classList.remove("class__display");
+    wrapper.classList.remove("class__display--opacity");
+    footerEl.classList.remove("class__display--opacity");
     navTitle.textContent = `Welcome, ${currentAccount.fName}!`;
     // Update UI
     updateUI();
   } else {
     currentAccount = null;
     loginStatus = false;
-    wrapper.classList.add("class__display");
-    footerEl.classList.add("class__display");
+    wrapper.classList.add("class__display--opacity");
+    footerEl.classList.add("class__display--opacity");
     navTitle.textContent = `Log in to get started`;
   }
 };
@@ -160,7 +165,6 @@ const updateUI = function (sortedStatus = false) {
   computeSummary(currentAccount);
   // computeInSummary();
 };
-loginFunction(user1); // always logged in ------------------------------
 
 // Function add movement
 const addMovement = function (user, value) {
@@ -193,7 +197,10 @@ const transferMoney = function (currentAccount) {
 
 // Function Loan Mechanics
 const loanFunction = function (loanValue) {
-  if (loanValue <= 0) return;
+  if (loanValue <= 0) {
+    popUpWrongInput("Incorrect amount. Try again!😅");
+    return;
+  }
   const maxMovement = currentAccount.movements.reduce(
     (acc, mov) => (acc > mov ? acc : mov),
     0
@@ -218,6 +225,44 @@ const closeAccFunction = function () {
   }
 };
 
+const popUpWrongInput = function (errorText = "Wrong input. Try again!😅") {
+  popUpWrongInputText.textContent = errorText;
+  // Calling the PopUp
+  popUpWrongInputEl.classList.remove("class__display--displayNone");
+  setTimeout(function () {
+    popUpWrongInputEl.classList.remove("class__display--opacity");
+    footerEl.classList.add("class__blur");
+    headerEl.classList.add("class__blur");
+    wrapper.classList.add("class__blur");
+  }, 100);
+
+  // Removing the PopUp
+  setTimeout(function () {
+    popUpWrongInputEl.classList.add("class__display--opacity");
+    setTimeout(function () {
+      popUpWrongInputEl.classList.add("class__display--displayNone");
+    }, 1000);
+    footerEl.classList.remove("class__blur");
+    headerEl.classList.remove("class__blur");
+    wrapper.classList.remove("class__blur");
+  }, 3000);
+};
+
+// Adding timer for log out
+
+const logOutTimer = setInterval(function () {
+  let minutes = Math.floor(seconds / 60);
+  timerEl.textContent = `You will be logged out in ${String(minutes).padStart(
+    2,
+    "0"
+  )}:${String(seconds - minutes * 60).padStart(2, "0")}`;
+  seconds--;
+  if (seconds === 0) {
+    clearInterval(logOutTimer);
+    loginFunction();
+  }
+}, 1000);
+
 // Events Handlers   ===================================================
 // Login event handler
 logBtn.addEventListener("click", function (e) {
@@ -228,6 +273,9 @@ logBtn.addEventListener("click", function (e) {
     ) {
       loginFunction(user);
       return;
+    } else {
+      inputLogin.value = "";
+      inputPIN.value = "";
     }
   });
 });
@@ -256,6 +304,8 @@ transferBtn.addEventListener("click", function (e) {
   ) {
     transferMoney(currentAccount);
     updateUI();
+  } else {
+    popUpWrongInput("Incorrect amount. Try again!😅");
   }
 });
 // Loan event handler

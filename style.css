@@ -123,13 +123,46 @@ h6 {
   box-sizing: content-box;
 }
 
-.class__display {
+.popUp__wrongInput {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  background-color: #ffffff;
+  border-radius: 30px;
+  width: 450px;
+  height: 300px;
+  padding: 30px 20px;
+  font-size: 24px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 1s;
+  text-align: center;
+}
+
+.class__display--opacity {
   opacity: 0;
+}
+
+.class__display--displayNone {
+  display: none;
+}
+
+.class__blur {
+  filter: blur(4px);
 }
 
 /* ======================Bankist CSS============================ */
 
 /* =======================HEADER=============================== */
+
+footer {
+  transition: filter 1s;
+  padding-bottom: 20px;
+}
+
 .nav {
   max-width: 100%;
   display: flex;
@@ -182,7 +215,7 @@ h6 {
   row-gap: 20px;
   column-gap: 20px;
   max-height: 900px;
-  transition: all 2s;
+  transition: all 1s;
 }
 
 
@@ -348,6 +381,7 @@ h6 {
 
 /* =================================FOOTER============================ */
 footer {
+  transition: filter 1s;
   margin: 80px auto;
   display: flex;
   align-items: center;
